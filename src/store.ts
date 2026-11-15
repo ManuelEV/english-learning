@@ -21,8 +21,6 @@ export interface Settings {
   sound: boolean
   accent: 'US' | 'GB'
   rate: number
-  /** Free mode: every station is open. */
-  free: boolean
 }
 
 interface State {
@@ -62,7 +60,7 @@ const defaults = {
   review: {} as Record<string, ReviewCard>,
   km: 0,
   streak: { count: 0, last: '' },
-  settings: { theme: 'light', sound: true, accent: 'US', rate: 0.95, free: false } as Settings,
+  settings: { theme: 'light', sound: true, accent: 'US', rate: 0.95 } as Settings,
 }
 
 export const useStore = create<State>()(

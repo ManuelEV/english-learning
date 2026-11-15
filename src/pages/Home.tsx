@@ -1,24 +1,12 @@
 import { Link } from 'react-router'
 import { motion } from 'motion/react'
 import { ArrowRight, BookOpen, Dumbbell, Wrench } from 'lucide-react'
-import { LINES, UNITS, getLine, getUnit } from '../content'
+import { LINES, UNITS, getLine } from '../content'
 import { MetroMap } from '../components/MetroMap'
 import { isDone, practicedToday, useStore } from '../store'
 import { useDueCount } from '../lib/review'
+import { useNextStop } from '../lib/next'
 import { TONE } from '../lib/tone'
-
-/** Where to go next: a started-but-unfinished station, else the first open one. */
-function useNextStop() {
-  const units = useStore((s) => s.units)
-  const started = UNITS.find((u) => units[u.id]?.learned && !isDone(units[u.id]))
-  if (started) return started
-  for (const line of LINES.filter((l) => l.id !== 'es')) {
-    const anyDone = line.unitIds.some((id) => isDone(units[id]))
-    const next = line.unitIds.find((id) => !isDone(units[id]))
-    if (anyDone && next) return getUnit(next)
-  }
-  return UNITS.find((u) => !isDone(units[u.id]))
-}
 
 const HOW = [
   { icon: BookOpen, tone: 'coral' as const, title: '1 · Aprende', text: 'Lecciones cortas paso a paso, con líneas de tiempo animadas, estructuras por bloques y audio.' },
@@ -74,8 +62,8 @@ export function Home() {
           </h1>
           <p className="mt-3 text-lg text-paper/75">
             {isNew
-              ? 'Cada tema es una estación: primero lo entiendes con una lección animada, luego lo practicas hasta que sale solo.'
-              : 'Retoma donde quedaste o pasa por el Taller a reparar tus errores.'}
+              ? 'Cada tema es una estación: primero lo entiendes con una lección animada, luego lo practicas hasta que sale solo. Súbete en la que quieras.'
+              : 'Retoma donde quedaste, salta a cualquier estación o pasa por el Taller a reparar tus errores.'}
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             {next && nextLine && (
@@ -142,14 +130,14 @@ export function Home() {
               </div>
             </header>
             <div className="px-2 pt-8 pb-4 sm:px-6">
-              <MetroMap line={line} />
+              <MetroMap line={line} nextId={next?.id} />
             </div>
           </section>
         )
       })}
 
       <footer className="pb-4 text-center text-sm text-muted">
-        Tu progreso se guarda en este navegador. Audio generado con la voz de tu dispositivo.
+        Tu progreso se guarda solo en este navegador, pero todas las estaciones están abiertas: en otro dispositivo puedes seguir desde la que quieras. Audio generado con la voz de tu dispositivo.
       </footer>
     </div>
   )

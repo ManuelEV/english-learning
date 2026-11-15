@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { motion } from 'motion/react'
-import { Check, Lock, Star } from 'lucide-react'
+import { Check, Star } from 'lucide-react'
 import type { Line } from '../content'
 import { getUnit } from '../content'
 import { isDone, useStore } from '../store'
@@ -15,11 +15,11 @@ interface Pt {
   y: number
 }
 
-/** Snake path through the stations: straight runs joined by rounded U-turns. */
-function pathThrough(pts: Pt[], BULGE: number): string {
+/** Snake path through stations `from`..`to`: straight runs joined by rounded U-turns. */
+function pathThrough(pts: Pt[], BULGE: number, from = 0, to = pts.length - 1): string {
   if (!pts.length) return ''
-  let d = `M ${pts[0].x} ${pts[0].y}`
-  for (let i = 1; i < pts.length; i++) {
+  let d = `M ${pts[from].x} ${pts[from].y}`
+  for (let i = from + 1; i <= to; i++) {
     const a = pts[i - 1]
     const b = pts[i]
     if (a.y === b.y) d += ` L ${b.x} ${b.y}`
@@ -33,11 +33,10 @@ function pathThrough(pts: Pt[], BULGE: number): string {
   return d
 }
 
-export function MetroMap({ line }: { line: Line }) {
+export function MetroMap({ line, nextId }: { line: Line; nextId?: string }) {
   const wrap = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(0)
   const units = useStore((s) => s.units)
-  const free = useStore((s) => s.settings.free)
   const tone = TONE[line.tone]
 
   useLayoutEffect(() => {
@@ -62,10 +61,15 @@ export function MetroMap({ line }: { line: Line }) {
   })
 
   const done = line.unitIds.map((id) => isDone(units[id]))
-  // The "current" station: first one not yet done.
-  const current = done.indexOf(false)
-  const reached = current === -1 ? n - 1 : current
-  const open = (i: number) => free || line.id === 'es' || i === 0 || done[i] || done[i - 1]
+  // Every station is open, so progress is not a single front: the track is
+  // painted wherever two neighbouring stations are both done.
+  const runs: [number, number][] = []
+  for (let i = 1; i < n; i++) {
+    if (!done[i - 1] || !done[i]) continue
+    const last = runs[runs.length - 1]
+    if (last && last[1] === i - 1) last[1] = i
+    else runs.push([i - 1, i])
+  }
 
   return (
     <div ref={wrap} className="relative" style={{ height: TOP + (rows - 1) * ROW_H + 132 }}>
@@ -74,26 +78,26 @@ export function MetroMap({ line }: { line: Line }) {
           <svg className="absolute inset-0 h-full w-full overflow-visible" aria-hidden>
             <path d={pathThrough(pts, BULGE)} fill="none" stroke={tone.softColor} strokeWidth={16} strokeLinecap="round" />
             <path d={pathThrough(pts, BULGE)} fill="none" stroke={tone.color} strokeWidth={3} strokeLinecap="round" strokeDasharray="2 10" opacity={0.55} />
-            {reached > 0 && (
+            {runs.map(([a, b]) => (
               <motion.path
-                key={`${width}-${reached}`}
-                d={pathThrough(pts.slice(0, reached + 1), BULGE)}
+                key={`${width}-${a}-${b}`}
+                d={pathThrough(pts, BULGE, a, b)}
                 fill="none"
                 stroke={tone.color}
                 strokeWidth={16}
                 strokeLinecap="round"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 1.1, ease: 'easeInOut' }}
+                transition={{ duration: 0.5 + 0.2 * (b - a), ease: 'easeInOut' }}
               />
-            )}
+            ))}
           </svg>
 
           {line.unitIds.map((id, i) => {
             const unit = getUnit(id)!
             const p = units[id]
-            const isOpen = open(i)
-            const isCurrent = i === current && isOpen
+            const started = !done[i] && !!p && (p.learned || p.attempts > 0)
+            const isCurrent = id === nextId
             const station = (
               <>
                 <span className="relative grid h-[4.25rem] w-[4.25rem] place-items-center">
@@ -102,16 +106,12 @@ export function MetroMap({ line }: { line: Line }) {
                     className={`relative grid h-full w-full place-items-center rounded-full border-[5px] text-3xl transition-transform group-hover:scale-110 group-active:scale-95 ${
                       done[i]
                         ? `${tone.bg} ${tone.border}`
-                        : isOpen
+                        : started || isCurrent
                           ? `bg-card ${tone.border}`
-                          : 'border-rule bg-sunk'
+                          : 'border-rule bg-card'
                     }`}
                   >
-                    {isOpen ? (
-                      <span className={done[i] ? 'drop-shadow-sm' : ''}>{unit.emoji}</span>
-                    ) : (
-                      <Lock size={22} className="text-muted" />
-                    )}
+                    <span className={done[i] ? 'drop-shadow-sm' : ''}>{unit.emoji}</span>
                   </span>
                   {done[i] && (
                     <span className="absolute -right-1 -bottom-1 grid h-6 w-6 place-items-center rounded-full border-2 border-card bg-good text-white">
@@ -129,7 +129,7 @@ export function MetroMap({ line }: { line: Line }) {
                     </motion.span>
                   )}
                 </span>
-                <span className={`mt-2 line-clamp-3 px-0.5 text-center font-display text-[0.92rem] leading-tight font-bold ${isOpen ? '' : 'text-muted'}`}>
+                <span className="mt-2 line-clamp-3 px-0.5 text-center font-display text-[0.92rem] leading-tight font-bold">
                   {unit.title}
                 </span>
                 <span className="mt-1 flex h-4 gap-0.5">
@@ -137,7 +137,9 @@ export function MetroMap({ line }: { line: Line }) {
                     ? [1, 2, 3].map((s) => (
                         <Star key={s} size={14} className={s <= p.stars ? 'fill-amber text-amber' : 'text-rule'} />
                       ))
-                    : p?.learned && <span className="text-[0.7rem] font-bold text-muted">lección vista</span>}
+                    : started && (
+                        <span className={`text-[0.7rem] font-bold ${tone.text}`}>{p?.learned ? 'lección vista' : 'en práctica'}</span>
+                      )}
                 </span>
               </>
             )
@@ -152,15 +154,9 @@ export function MetroMap({ line }: { line: Line }) {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 18, delay: i * 0.06 }}
               >
-                {isOpen ? (
-                  <Link to={`/u/${id}`} className="flex flex-col items-center rounded-2xl">
-                    {station}
-                  </Link>
-                ) : (
-                  <div className="flex cursor-not-allowed flex-col items-center" title="Completa la estación anterior para abrirla">
-                    {station}
-                  </div>
-                )}
+                <Link to={`/u/${id}`} className="flex flex-col items-center rounded-2xl">
+                  {station}
+                </Link>
               </motion.div>
             )
           })}

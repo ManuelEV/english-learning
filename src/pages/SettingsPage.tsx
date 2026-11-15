@@ -78,9 +78,6 @@ export function SettingsPage() {
         <Row title="Efectos de sonido" text="Sonidos al acertar, fallar y llegar a una estación.">
           <Toggle on={settings.sound} onChange={(v) => set('sound', v)} label="Efectos de sonido" />
         </Row>
-        <Row title="Modo libre" text="Abre todas las estaciones sin tener que completar las anteriores.">
-          <Toggle on={settings.free} onChange={(v) => set('free', v)} label="Modo libre" />
-        </Row>
         <Row title="Reiniciar progreso" text="Borra estaciones completadas, kilómetros, racha y el Taller. No se puede deshacer.">
           {confirm ? (
             <div className="flex gap-2">
