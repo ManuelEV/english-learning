@@ -7,6 +7,7 @@ import { UnitPage } from './pages/UnitPage'
 import { Lesson } from './pages/Lesson'
 import { Practice } from './pages/Practice'
 import { Workshop } from './pages/Workshop'
+import { SummaryIndex, SummaryPage } from './pages/Summary'
 import { SettingsPage } from './pages/SettingsPage'
 import { useStore } from './store'
 
@@ -33,6 +34,8 @@ export function App() {
           <Route element={<Shell />}>
             <Route index element={<Home />} />
             <Route path="u/:id" element={<UnitPage />} />
+            <Route path="resumen" element={<SummaryIndex />} />
+            <Route path="resumen/:id" element={<SummaryPage />} />
             <Route path="taller" element={<Workshop />} />
             <Route path="ajustes" element={<SettingsPage />} />
           </Route>

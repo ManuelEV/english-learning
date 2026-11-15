@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
-import { ArrowLeft, ArrowRight, Play, Snail } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, Play, Snail, X } from 'lucide-react'
 import type {
   ChoiceExercise,
   ErrorExercise,
@@ -253,42 +253,83 @@ export function ErrorView({ ex, done, onDone }: ExProps<ErrorExercise>) {
   const [sel, setSel] = useState<number | null>(null)
   const lastWrong = tokens.findLastIndex((t) => t.wrong)
   const ok = sel !== null && tokens[sel].wrong
+  const wrongText = ex.sentence.match(/\[([^\]]*)\]/)?.[1] ?? ''
 
   return (
     <>
       <Prompt>Hay un error en esta frase. Toca la palabra que está mal.</Prompt>
-      <div className="card flex flex-wrap items-center gap-x-1.5 gap-y-3 p-5">
+      <div className="card flex flex-wrap items-center gap-x-1.5 gap-y-4 p-5">
         {tokens.map((tok, i) => {
+          // After answering, red is reserved for a wrong tap. The faulty word itself is
+          // shown as "replaced" (muted, struck) in green when found, amber when missed.
           let state = ''
-          if (done) state = tok.wrong ? 'tile-bad line-through decoration-2' : i === sel ? 'tile-bad' : 'border-transparent shadow-none'
-          else if (i === sel) state = 'tile-selected'
+          if (done) {
+            if (tok.wrong) state = `border-dashed text-muted line-through decoration-2 shadow-none ${ok ? 'border-good bg-card' : 'border-amber bg-amber-soft'}`
+            else state = i === sel ? 'tile-bad' : 'border-transparent shadow-none'
+          } else if (i === sel) state = 'tile-selected'
           return (
             <span key={i} className="inline-flex items-center gap-1.5">
-              <button
-                type="button"
-                disabled={done}
-                onClick={() => {
-                  sfx.tap()
-                  setSel(i)
-                }}
-                className={`tile px-2.5 py-1.5 text-xl ${state}`}
-              >
-                {tok.text}
-              </button>
-              {done && i === lastWrong && (
-                <motion.span
-                  initial={{ scale: 0, rotate: -8 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ type: 'spring', stiffness: 320, damping: 14, delay: 0.2 }}
-                  className="rounded-xl border-2 border-good bg-good-soft px-2.5 py-1.5 text-xl font-bold text-good"
+              <span className="relative inline-flex">
+                <button
+                  type="button"
+                  disabled={done}
+                  onClick={() => {
+                    sfx.tap()
+                    setSel(i)
+                  }}
+                  className={`tile px-2.5 py-1.5 text-xl ${state}`}
                 >
-                  {ex.fix ? ex.fix + tail : '∅ (sobra)'}
-                </motion.span>
+                  {tok.text}
+                </button>
+                {done && i === sel && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 14 }}
+                    className={`absolute -top-2.5 -right-2 grid h-5 w-5 place-items-center rounded-full text-white ${ok ? 'bg-good' : 'bg-bad'}`}
+                  >
+                    {ok ? <Check size={12} strokeWidth={4} /> : <X size={12} strokeWidth={4} />}
+                  </motion.span>
+                )}
+              </span>
+              {done && i === lastWrong && (
+                <>
+                  <ArrowRight size={20} className="shrink-0 text-good" aria-label="se corrige a" />
+                  <motion.span
+                    initial={{ scale: 0, rotate: -8 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: 'spring', stiffness: 320, damping: 14, delay: 0.2 }}
+                    className="rounded-xl border-2 border-good bg-good-soft px-2.5 py-1.5 text-xl font-bold text-good"
+                  >
+                    {ex.fix ? ex.fix + tail : '∅ (sobra)'}
+                  </motion.span>
+                </>
               )}
             </span>
           )
         })}
       </div>
+      {done && (
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className={`flex flex-wrap items-center gap-x-2 gap-y-1 rounded-2xl px-4 py-3 font-semibold ${ok ? 'bg-good-soft' : 'bg-amber-soft'}`}
+        >
+          {ok ? (
+            <span className="font-bold text-good">🎯 ¡Encontraste el error!</span>
+          ) : (
+            <span>
+              Tocaste <span className="font-bold text-bad">«{sel !== null ? tokens[sel].text : ''}»</span>, pero el error estaba en:
+            </span>
+          )}
+          <span className="inline-flex flex-wrap items-center gap-2">
+            <span className="text-muted line-through decoration-2">{wrongText}</span>
+            <ArrowRight size={16} className="text-good" aria-hidden />
+            <span className="font-bold text-good">{ex.fix || 'se elimina'}</span>
+          </span>
+        </motion.p>
+      )}
       {!done && <CheckBar disabled={sel === null} onCheck={() => onDone(ok)} />}
     </>
   )

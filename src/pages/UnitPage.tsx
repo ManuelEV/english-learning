@@ -1,6 +1,6 @@
 import { Link, Navigate, useParams } from 'react-router'
 import { motion } from 'motion/react'
-import { ArrowLeft, ArrowRight, BookOpen, Check, Clock, Dumbbell, Star } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, Check, Clock, Dumbbell, ScrollText, Star } from 'lucide-react'
 import { getLine, getUnit } from '../content'
 import type { Step } from '../content/types'
 import { isDone, useStore } from '../store'
@@ -93,6 +93,17 @@ export function UnitPage() {
           </Link>
         </motion.div>
       </div>
+
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+        <Link to={`/resumen/${unit.id}`} className="card group flex items-center gap-4 p-5">
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-amber-soft text-amber"><ScrollText size={24} /></span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-display text-xl font-extrabold">Resumen de la estación</span>
+            <span className="leading-snug text-ink/80">El torpedo: estructura, usos, errores típicos y ejemplos en una sola página.</span>
+          </span>
+          <ArrowRight size={20} className="shrink-0 text-muted transition-transform group-hover:translate-x-1" />
+        </Link>
+      </motion.div>
 
       <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="card p-6">
         <p className="eyebrow">Recorrido de la lección</p>

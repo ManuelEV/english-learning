@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet } from 'react-router'
-import { Flame, Map, Moon, Route, Settings, Sun, Wrench } from 'lucide-react'
+import { Flame, Map, Moon, Route, ScrollText, Settings, Sun, Wrench } from 'lucide-react'
 import { liveStreak, useStore } from '../store'
 import { useDueCount } from '../lib/review'
 
@@ -20,7 +20,7 @@ export function Logo() {
 }
 
 const navCls = ({ isActive }: { isActive: boolean }) =>
-  `relative flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-bold transition-colors ${
+  `relative flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm font-bold transition-colors sm:gap-2 sm:px-3.5 ${
     isActive ? 'bg-ink text-paper' : 'text-muted hover:bg-sunk hover:text-ink'
   }`
 
@@ -37,6 +37,7 @@ export function Shell() {
         <Logo />
         <nav className="hidden items-center gap-1 sm:flex">
           <NavLink to="/" end className={navCls}><Map size={16} /> Mapa</NavLink>
+          <NavLink to="/resumen" className={navCls}><ScrollText size={16} /> Resúmenes</NavLink>
           <NavLink to="/taller" className={navCls}>
             <Wrench size={16} /> Taller
             {due > 0 && <span className="grid h-5 min-w-5 place-items-center rounded-full bg-coral px-1 text-[0.7rem] text-white">{due}</span>}
@@ -66,6 +67,7 @@ export function Shell() {
       {/* Mobile tab bar */}
       <nav className="fixed inset-x-0 bottom-0 z-20 flex justify-around border-t-2 border-rule bg-paper/95 px-2 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur sm:hidden">
         <NavLink to="/" end className={navCls}><Map size={18} /> Mapa</NavLink>
+        <NavLink to="/resumen" className={navCls}><ScrollText size={18} /> Resumen</NavLink>
         <NavLink to="/taller" className={navCls}>
           <Wrench size={18} /> Taller
           {due > 0 && <span className="grid h-5 min-w-5 place-items-center rounded-full bg-coral px-1 text-[0.7rem] text-white">{due}</span>}
