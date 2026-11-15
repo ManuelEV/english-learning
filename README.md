@@ -33,7 +33,7 @@ El sitio se publica como un Worker de Cloudflare con archivos estáticos (`wrang
 
 **Con Git (recomendado):** en el panel de Cloudflare → Workers & Pages → Create → importa el repositorio.
 
-- Build command: `npm run build`
+- Build command: puede quedar vacío (`wrangler deploy` ejecuta `npm run build` por su cuenta)
 - Deploy command: `npx wrangler deploy`
 - Variable de entorno: `NODE_VERSION=22` (o superior)
 - El nombre del proyecto debe coincidir con `name` en `wrangler.toml` (`nextstop-english`).

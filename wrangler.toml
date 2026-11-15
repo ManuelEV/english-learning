@@ -6,3 +6,8 @@ compatibility_date = "2026-11-01"
 [assets]
 directory = "./dist"
 not_found_handling = "single-page-application"
+
+# `wrangler deploy` builds the site first, so the Cloudflare project works
+# even when no separate build command is configured in the dashboard.
+[build]
+command = "npm run build"
