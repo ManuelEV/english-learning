@@ -27,13 +27,16 @@ npm run build      # typecheck + validate + build a dist/
 
 Stack: React 19, Vite 8, TypeScript 7, Tailwind CSS 4, Motion, React Router 8, Zustand.
 
-## Desplegar en Cloudflare Pages
+## Desplegar en Cloudflare
 
-**Con Git (recomendado):** en el panel de Cloudflare → Workers & Pages → Create → Pages → conecta el repositorio.
+El sitio se publica como un Worker de Cloudflare con archivos estáticos (`wrangler.toml` apunta a `dist/`).
+
+**Con Git (recomendado):** en el panel de Cloudflare → Workers & Pages → Create → importa el repositorio.
 
 - Build command: `npm run build`
-- Build output directory: `dist`
+- Deploy command: `npx wrangler deploy`
 - Variable de entorno: `NODE_VERSION=22` (o superior)
+- El nombre del proyecto debe coincidir con `name` en `wrangler.toml` (`nextstop-english`).
 
 **Desde la terminal:**
 
@@ -42,7 +45,7 @@ npx wrangler login
 npm run deploy
 ```
 
-Las rutas (`/u/…`, `/taller`) funcionan sin configuración extra: Pages sirve `index.html` como SPA cuando no existe un `404.html`.
+Las rutas (`/u/…`, `/taller`) funcionan gracias a `not_found_handling = "single-page-application"` en `wrangler.toml`.
 
 ## Agregar contenido
 
