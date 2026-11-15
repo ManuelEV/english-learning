@@ -1,0 +1,273 @@
+import type { Unit } from '../types'
+
+const unit: Unit = {
+  id: 'b2-narrative-tenses',
+  line: 'b2',
+  title: 'Narrative Tenses',
+  subtitle: 'Cuenta una historia en pasado dejando claro qué pasó primero y qué estaba pasando.',
+  emoji: '📖',
+  minutes: 15,
+  steps: [
+    {
+      kind: 'hook',
+      emoji: '✈️',
+      title: 'La historia del vuelo perdido',
+      text: 'Le cuentas a una amiga tu peor viaje. Si solo usas past simple, suena a lista de hechos. Para que se entienda **qué pasó antes** y **qué estaba pasando**, una buena historia combina cuatro tiempos.',
+      example: {
+        en: 'When I **got** to the gate, the plane **had** already **left**.',
+        es: 'Cuando llegué a la puerta de embarque, el avión ya había salido.',
+        note: 'Dos pasados: uno ocurrió antes que el otro.',
+      },
+    },
+    {
+      kind: 'timeline',
+      title: 'Past simple: la cadena de hechos',
+      text: 'El **past simple** cuenta las acciones principales, una tras otra, en el orden en que ocurrieron. Es la columna vertebral de la historia.',
+      items: [
+        { type: 'point', at: -75, label: 'woke up late', tone: 'coral' },
+        { type: 'point', at: -50, label: 'took a taxi', tone: 'coral' },
+        { type: 'point', at: -25, label: 'got to the airport', tone: 'coral' },
+      ],
+      example: {
+        en: 'I **woke up** late, **took** a taxi and **got** to the airport at nine.',
+        es: 'Me desperté tarde, tomé un taxi y llegué al aeropuerto a las nueve.',
+      },
+    },
+    {
+      kind: 'timeline',
+      title: 'Past continuous: el fondo de la escena',
+      text: 'El **past continuous** pinta lo que **estaba en progreso** cuando ocurrió otra cosa. La acción larga va en continuous; la que la interrumpe, en past simple.',
+      items: [
+        { type: 'span', at: -75, to: -25, label: 'it was raining', tone: 'teal' },
+        { type: 'point', at: -50, label: 'my phone rang', tone: 'coral' },
+      ],
+      example: {
+        en: 'It **was raining** and I **was looking** for a taxi when my phone **rang**.',
+        es: 'Estaba lloviendo y yo estaba buscando un taxi cuando sonó mi teléfono.',
+      },
+    },
+    {
+      kind: 'timeline',
+      title: 'Past perfect: el pasado del pasado',
+      text: 'Ya estás en un momento de la historia y quieres mencionar algo **anterior**. El **past perfect** salta hacia atrás sin perder el hilo.',
+      items: [
+        { type: 'point', at: -70, label: '1st: the plane left', tone: 'violet' },
+        { type: 'point', at: -30, label: '2nd: I got to the gate', tone: 'coral' },
+      ],
+      example: {
+        en: 'By the time I **got** to the gate, the plane **had left**.',
+        es: 'Para cuando llegué a la puerta, el avión ya había salido.',
+      },
+    },
+    {
+      kind: 'formula',
+      title: 'Las tres formas compuestas',
+      text: 'Ninguna cambia con la persona, salvo **was/were**. En past perfect, **had** sirve para todos los sujetos.',
+      rows: [
+        {
+          label: 'Past continuous',
+          parts: [
+            { text: 'She', caption: 'sujeto', tone: 'ink' },
+            { text: 'was', caption: 'was / were', tone: 'teal' },
+            { text: 'waiting', caption: 'verbo + -ing', tone: 'coral' },
+          ],
+        },
+        {
+          label: 'Past perfect',
+          parts: [
+            { text: 'She', caption: 'sujeto', tone: 'ink' },
+            { text: 'had', caption: 'auxiliar', tone: 'violet' },
+            { text: 'left', caption: 'participio', tone: 'coral' },
+          ],
+        },
+        {
+          label: 'Past perfect continuous',
+          parts: [
+            { text: 'She', caption: 'sujeto', tone: 'ink' },
+            { text: 'had', caption: 'auxiliar', tone: 'violet' },
+            { text: 'been', caption: 'siempre igual', tone: 'amber' },
+            { text: 'waiting', caption: 'verbo + -ing', tone: 'coral' },
+          ],
+        },
+      ],
+      examples: [
+        { en: 'We **were having** dinner when the lights went out.', es: 'Estábamos cenando cuando se fue la luz.' },
+        { en: 'I realized I **had forgotten** my passport.', es: 'Me di cuenta de que había olvidado mi pasaporte.' },
+        {
+          en: 'She was tired because she **had been driving** all night.',
+          es: 'Estaba cansada porque había estado manejando toda la noche.',
+          note: 'Actividad larga anterior a otro momento del pasado.',
+        },
+      ],
+    },
+    {
+      kind: 'compare',
+      title: 'Con «when», el tiempo cambia la historia',
+      text: 'La misma frase cuenta dos historias distintas según el tiempo del segundo verbo.',
+      left: {
+        label: 'Past simple',
+        tone: 'coral',
+        points: [
+          'Una acción después de la otra',
+          'Primero llegué; luego ella se fue',
+          'Nos vimos',
+        ],
+        example: { en: 'When I arrived, she **left**.', es: 'Cuando llegué, ella se fue.' },
+      },
+      right: {
+        label: 'Past perfect',
+        tone: 'violet',
+        points: [
+          'La segunda acción ocurrió antes',
+          'Primero se fue; luego llegué yo',
+          'No nos vimos',
+        ],
+        example: { en: 'When I arrived, she **had left**.', es: 'Cuando llegué, ella ya se había ido.' },
+      },
+    },
+    {
+      kind: 'tips',
+      title: 'Palabras que ordenan la historia',
+      items: [
+        { emoji: '⏱️', title: 'by the time', text: 'By the time we arrived, the film had started. (= cuando llegamos, ya…)' },
+        { emoji: '✅', title: 'already', text: 'Va entre had y el participio: They had already eaten.' },
+        { emoji: '⚡', title: 'as soon as', text: 'As soon as I saw her, I knew something was wrong. (= en cuanto)' },
+        { emoji: '🎬', title: 'while / when', text: 'While + acción larga (continuous); when + acción que interrumpe (simple).' },
+      ],
+    },
+    {
+      kind: 'trap',
+      title: 'Trampa clásica del español',
+      wrong: 'When we got to the cinema, the film already started.',
+      right: 'When we got to the cinema, the film had already started.',
+      why: 'Al hablar solemos decir «cuando llegamos, la película ya empezó». En inglés, si una acción es **anterior** a otra del pasado y el orden importa, marca el salto con **had + participio**. Ojo: después de had va participio (had gone, no «had went»).',
+    },
+    {
+      kind: 'check',
+      question: 'Entraste a la cocina y viste el piso mojado. ¿Qué pasó antes de que entraras?',
+      sentence: 'The floor was wet because someone ___ a glass of water.',
+      options: ['dropped', 'had dropped', 'was dropping'],
+      answer: 1,
+      explain: 'El vaso se cayó antes del momento de la historia (cuando el piso estaba mojado) → past perfect: had dropped.',
+    },
+  ],
+  exercises: [
+    {
+      id: 'b2-narrative-tenses-1',
+      type: 'choice',
+      prompt: 'Elige la opción correcta.',
+      sentence: 'I ___ dinner when the lights went out, so we ate sandwiches instead.',
+      options: ['was cooking', 'had cooked', 'cook'],
+      answer: 0,
+      explain: 'Cocinar estaba en progreso cuando se fue la luz (y no se terminó) → past continuous: was cooking.',
+    },
+    {
+      id: 'b2-narrative-tenses-2',
+      type: 'sort',
+      prompt: 'En una historia, ¿qué expresa cada forma?',
+      categories: ['Estaba en progreso', 'Había pasado antes'],
+      items: [
+        { text: 'it was raining', cat: 0 },
+        { text: 'the train had left', cat: 1 },
+        { text: 'we were waiting', cat: 0 },
+        { text: 'she had forgotten', cat: 1 },
+        { text: 'he was driving', cat: 0 },
+        { text: 'they had already eaten', cat: 1 },
+      ],
+      explain: 'Was/were + -ing describe el fondo de la escena (algo en progreso). Had + participio salta a un momento anterior al de la historia.',
+    },
+    {
+      id: 'b2-narrative-tenses-3',
+      type: 'gap',
+      prompt: 'Completa con past perfect.',
+      sentence: 'By the time we got to the station, the train ___.',
+      hint: '(leave)',
+      answers: ['had left', 'had already left'],
+      explain: '«By the time» indica que algo ocurrió antes de ese momento: primero salió el tren, después llegamos → had left.',
+    },
+    {
+      id: 'b2-narrative-tenses-4',
+      type: 'choice',
+      prompt: 'Elige la opción correcta.',
+      sentence: 'As soon as she ___ the email, she called her boss.',
+      options: ['was reading', 'read', 'has read'],
+      answer: 1,
+      explain: '«As soon as» une dos acciones seguidas y terminadas del pasado → past simple. «Has read» es presente perfecto y no encaja en una historia en pasado.',
+    },
+    {
+      id: 'b2-narrative-tenses-5',
+      type: 'error',
+      sentence: 'By the time the police arrived, the thief [has] escaped.',
+      fix: 'had',
+      explain: 'Toda la historia está en pasado, y la huida fue anterior a la llegada de la policía → past perfect: had escaped, no «has escaped».',
+    },
+    {
+      id: 'b2-narrative-tenses-6',
+      type: 'order',
+      es: 'Todos ya se habían ido cuando llegué.',
+      words: ['Everyone', 'had', 'already', 'left', 'when', 'I', 'arrived.'],
+      distractors: ['has', 'leave'],
+      explain: 'Irse es anterior a llegar → had + already + participio. «Already» va entre had y left.',
+    },
+    {
+      id: 'b2-narrative-tenses-7',
+      type: 'listen',
+      text: 'She was tired because she had been working all day.',
+      es: 'Estaba cansada porque había estado trabajando todo el día.',
+      explain: 'Had been + -ing: una actividad larga anterior que explica la situación del pasado (estaba cansada).',
+    },
+    {
+      id: 'b2-narrative-tenses-8',
+      type: 'gap',
+      prompt: 'Completa con past perfect continuous.',
+      sentence: 'My feet hurt because I ___ around the city for hours.',
+      hint: '(walk)',
+      answers: ['had been walking', "'d been walking"],
+      explain: 'Caminar duró horas y ocurrió antes del momento en que me dolían los pies → had been walking.',
+    },
+    {
+      id: 'b2-narrative-tenses-9',
+      type: 'choice',
+      prompt: 'Elige la opción correcta.',
+      sentence: 'By the time the firefighters arrived, the neighbours ___ the fire.',
+      options: ['have already put out', 'had already put out', 'were already put out'],
+      answer: 1,
+      explain: 'Los vecinos apagaron el fuego antes de que llegaran los bomberos → past perfect. «Have put out» conecta con el presente, no con otro pasado.',
+    },
+    {
+      id: 'b2-narrative-tenses-10',
+      type: 'error',
+      sentence: 'They [were waiting] for two hours when the bus finally came.',
+      fix: 'had been waiting',
+      explain: 'Hay una duración (for two hours) que llega hasta otro momento del pasado → past perfect continuous. Es como «llevaban dos horas esperando».',
+    },
+    {
+      id: 'b2-narrative-tenses-11',
+      type: 'rewrite',
+      prompt: 'Une las dos frases en una sola usando past perfect.',
+      source: 'First the film started. Then we arrived.',
+      start: 'When we arrived,',
+      answers: [
+        'When we arrived, the film had already started',
+        'When we arrived, the film had started',
+      ],
+      explain: 'La película empezó antes de nuestra llegada. Como contamos primero la llegada, el hecho anterior va con had + participio.',
+    },
+    {
+      id: 'b2-narrative-tenses-12',
+      type: 'rewrite',
+      prompt: 'Une las dos frases usando past perfect continuous + for.',
+      source: 'She started waiting at six. Her friends arrived at eight.',
+      start: 'When her friends arrived,',
+      answers: [
+        'When her friends arrived, she had been waiting for two hours',
+        "When her friends arrived, she'd been waiting for two hours",
+        'When her friends arrived, she had been waiting for 2 hours',
+        "When her friends arrived, she'd been waiting for 2 hours",
+      ],
+      explain: 'De seis a ocho son dos horas de espera que terminan en otro momento del pasado → had been waiting for two hours.',
+    },
+  ],
+}
+
+export default unit

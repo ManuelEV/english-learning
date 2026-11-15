@@ -1,0 +1,243 @@
+import type { Unit } from '../types'
+
+const unit: Unit = {
+  id: 'b1-modals',
+  line: 'b1',
+  title: 'Must, Have to, Should & Might',
+  subtitle: 'Expresa obligación, prohibición, consejo y posibilidad sin confundirlos.',
+  emoji: '🚦',
+  minutes: 12,
+  steps: [
+    {
+      kind: 'hook',
+      emoji: '🛂',
+      title: 'Un aeropuerto lleno de reglas',
+      text: 'En el aeropuerto todo son avisos: lo que es **obligatorio**, lo que está **prohibido**, lo que te **conviene** y lo que **tal vez** pase. En inglés, cada idea tiene su verbo modal.',
+      example: {
+        en: 'You **must** show your passport at the gate.',
+        es: 'Debes mostrar tu pasaporte en la puerta de embarque.',
+        note: 'Es una regla → obligación.',
+      },
+    },
+    {
+      kind: 'tips',
+      title: 'El mapa de los cuatro',
+      text: 'Piensa en ellos como una escala, de lo más fuerte a lo más suave.',
+      items: [
+        { emoji: '🔴', title: 'must / have to = obligación', text: 'You have to wear a seat belt. Es necesario; no hay opción.' },
+        { emoji: '🟡', title: 'should = consejo', text: 'You should see a doctor. Es buena idea, pero tú decides.' },
+        { emoji: '🟢', title: 'might = posibilidad', text: 'It might rain later. Tal vez sí, tal vez no.' },
+      ],
+    },
+    {
+      kind: 'formula',
+      title: 'Cómo se construyen',
+      text: '**Must, should y might** no cambian nunca y van con el verbo base **sin to**. **Have to** es un verbo normal: se conjuga y usa do / does.',
+      rows: [
+        {
+          label: 'Modal',
+          parts: [
+            { text: 'She', caption: 'sujeto', tone: 'ink' },
+            { text: 'must / should / might', caption: 'sin -s, sin to', tone: 'coral' },
+            { text: 'go', caption: 'verbo base', tone: 'teal' },
+          ],
+        },
+        {
+          label: 'Have to',
+          parts: [
+            { text: 'She', caption: 'sujeto', tone: 'ink' },
+            { text: 'has to', caption: 'have to / has to', tone: 'violet' },
+            { text: 'go', caption: 'verbo base', tone: 'teal' },
+          ],
+        },
+        {
+          label: 'Pregunta',
+          parts: [
+            { text: 'Does', caption: 'do / does', tone: 'violet' },
+            { text: 'she', caption: 'sujeto', tone: 'ink' },
+            { text: 'have to', tone: 'violet' },
+            { text: 'go?', caption: 'verbo base', tone: 'teal' },
+          ],
+        },
+      ],
+      examples: [
+        { en: 'He **has to** work on Saturdays.', es: 'Él tiene que trabajar los sábados.' },
+        { en: 'You **should** try the fish. It **might** be the best in town.', es: 'Deberías probar el pescado. Puede que sea el mejor de la ciudad.' },
+      ],
+    },
+    {
+      kind: 'compare',
+      title: "El duelo: mustn't vs don't have to",
+      text: 'En afirmativa, must y have to significan casi lo mismo. En **negativa** significan cosas opuestas. Aquí está la clave de la unidad.',
+      left: {
+        label: "mustn't",
+        tone: 'coral',
+        points: [
+          'Está prohibido',
+          'No lo hagas: no hay opción',
+          'En español: «no debes / no puedes»',
+        ],
+        example: { en: "You **mustn't** use your phone during the exam.", es: 'No debes usar el celular durante el examen.' },
+      },
+      right: {
+        label: "don't have to",
+        tone: 'teal',
+        points: [
+          'No es necesario',
+          'Puedes hacerlo si quieres',
+          'En español: «no hace falta que…»',
+        ],
+        example: { en: "You **don't have to** wear a tie. It's optional.", es: 'No hace falta que uses corbata. Es opcional.' },
+      },
+    },
+    {
+      kind: 'examples',
+      title: 'Consejos y posibilidades',
+      text: '**Should / shouldn\'t** suaviza: es una recomendación. **Might / might not** indica que algo es posible, pero no seguro.',
+      items: [
+        { en: "You **shouldn't** drink coffee so late.", es: 'No deberías tomar café tan tarde.' },
+        { en: 'I **might** go to the party. I haven\'t decided yet.', es: 'Puede que vaya a la fiesta. Todavía no lo decido.' },
+        { en: 'Take an umbrella. It **might** rain.', es: 'Lleva un paraguas. Puede que llueva.' },
+      ],
+    },
+    {
+      kind: 'tips',
+      title: 'Dos detalles útiles',
+      items: [
+        { emoji: '⏪', title: 'Must no tiene pasado', text: 'Para una obligación en el pasado usa had to: Yesterday I had to work late.' },
+        { emoji: '🗣️', title: 'Have to es el más común', text: 'Al hablar, have to se usa mucho más. Must suena a regla escrita o a algo que tú sientes muy necesario.' },
+      ],
+    },
+    {
+      kind: 'trap',
+      title: 'Trampa clásica del español',
+      wrong: 'She must to finish the report today.',
+      right: 'She must finish the report today.',
+      why: 'En español decimos «tiene **que** terminar», y ese «que» se nos cuela como to. Después de must, should y might va el verbo base, sin to. Y ojo: «no tienes que fumar aquí» como prohibición es **mustn\'t**, no don\'t have to.',
+    },
+    {
+      kind: 'check',
+      question: 'El museo es gratis los domingos. ¿Cómo se lo dices a un turista?',
+      sentence: 'You ___ pay on Sundays. It is free.',
+      options: ["mustn't", "don't have to", "shouldn't"],
+      answer: 1,
+      explain: 'Pagar no está prohibido; simplemente no es necesario → don’t have to.',
+    },
+  ],
+  exercises: [
+    {
+      id: 'b1-modals-1',
+      type: 'choice',
+      prompt: 'Elige la opción correcta.',
+      sentence: 'You look tired. You ___ go to bed early tonight.',
+      options: ['should', "mustn't", "don't have to"],
+      answer: 0,
+      explain: 'Es un consejo amable para alguien cansado → should + verbo base.',
+    },
+    {
+      id: 'b1-modals-2',
+      type: 'match',
+      prompt: 'Une cada idea con su verbo.',
+      pairs: [
+        ['Es obligatorio', 'have to'],
+        ['Está prohibido', "mustn't"],
+        ['No es necesario', "don't have to"],
+        ['Es un consejo', 'should'],
+        ['Es posible', 'might'],
+      ],
+      explain: 'Have to obliga, mustn’t prohíbe, don’t have to quita la obligación, should aconseja y might expresa posibilidad.',
+    },
+    {
+      id: 'b1-modals-3',
+      type: 'gap',
+      prompt: 'Completa con la forma negativa de have to.',
+      sentence: "It's Saturday tomorrow, so I ___ get up early.",
+      answers: ["don't have to", 'do not have to'],
+      explain: 'El sábado no es necesario madrugar. La ausencia de obligación se expresa con don’t have to.',
+    },
+    {
+      id: 'b1-modals-4',
+      type: 'choice',
+      prompt: 'Elige la opción correcta.',
+      sentence: 'This is a hospital. You ___ smoke anywhere in the building.',
+      options: ["don't have to", "mustn't", 'might'],
+      answer: 1,
+      explain: 'Fumar en un hospital está prohibido → mustn’t. Don’t have to solo diría que no es necesario.',
+    },
+    {
+      id: 'b1-modals-5',
+      type: 'error',
+      sentence: 'You must [to wear] a seat belt in the car.',
+      fix: 'wear',
+      explain: 'Después de must va el verbo base sin to. El «que» de «tienes que» no se traduce.',
+    },
+    {
+      id: 'b1-modals-6',
+      type: 'order',
+      es: 'Puede que ella llegue tarde a la reunión.',
+      words: ['She', 'might', 'be', 'late', 'for', 'the meeting.'],
+      distractors: ['mights', 'being'],
+      explain: 'Might no lleva -s con she y va seguido del verbo base: She might be late.',
+    },
+    {
+      id: 'b1-modals-7',
+      type: 'gap',
+      prompt: 'Completa con la forma correcta de have to.',
+      sentence: "My sister ___ wear a uniform at work. It's the rule.",
+      answers: ['has to'],
+      explain: 'Have to se conjuga como un verbo normal: con she, he o it pasa a has to.',
+    },
+    {
+      id: 'b1-modals-8',
+      type: 'listen',
+      text: "You don't have to pay for the museum today.",
+      es: 'Hoy no tienes que pagar la entrada al museo.',
+      explain: 'Don’t have to indica que algo no es necesario (hoy la entrada es gratis), no que esté prohibido.',
+    },
+    {
+      id: 'b1-modals-9',
+      type: 'sort',
+      prompt: '¿Está prohibido o simplemente no es necesario?',
+      categories: ['Prohibido', 'No es necesario'],
+      items: [
+        { text: "You mustn't park here.", cat: 0 },
+        { text: "You don't have to wear a tie.", cat: 1 },
+        { text: "You mustn't touch the paintings.", cat: 0 },
+        { text: "You don't have to bring food.", cat: 1 },
+        { text: "You mustn't be late for the exam.", cat: 0 },
+        { text: "You don't have to pay in cash.", cat: 1 },
+      ],
+      explain: 'Mustn’t significa «no lo hagas». Don’t have to significa «no hace falta, pero puedes si quieres».',
+    },
+    {
+      id: 'b1-modals-10',
+      type: 'error',
+      sentence: 'Yesterday I [must] work until ten at night.',
+      fix: 'had to',
+      explain: 'Must no tiene forma de pasado. Para una obligación en el pasado se usa had to.',
+    },
+    {
+      id: 'b1-modals-11',
+      type: 'choice',
+      prompt: 'Elige la opción correcta.',
+      sentence: "I'm not sure where Carla is. She ___ be in a meeting.",
+      options: ['might', 'mights', "mustn't"],
+      answer: 0,
+      explain: 'No estás seguro, solo es una posibilidad → might. Los modales nunca llevan -s en tercera persona.',
+    },
+    {
+      id: 'b1-modals-12',
+      type: 'rewrite',
+      prompt: 'Reescribe la idea usando have to.',
+      source: "It isn't necessary for you to come to the office tomorrow.",
+      start: 'You',
+      answers: [
+        "You don't have to come to the office tomorrow",
+        'You do not have to come to the office tomorrow',
+      ],
+      explain: '«It isn’t necessary» equivale a don’t have to: no hay obligación, pero tampoco está prohibido.',
+    },
+  ],
+}
+
+export default unit

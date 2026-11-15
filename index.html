@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="NextStop English: aprende y practica inglés de B1 a C1 con lecciones animadas paso a paso y práctica interactiva." />
+    <meta name="theme-color" content="#FBF6EC" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>NextStop English · De B1 a C1, estación por estación</title>
+    <script>
+      try {
+        var s = JSON.parse(localStorage.getItem('nextstop-v1') || '{}')
+        var t = s.state && s.state.settings && s.state.settings.theme
+        if (t === 'dark') document.documentElement.dataset.theme = 'dark'
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
